@@ -27,15 +27,15 @@
                 <p>
                     Total
                 </p>
-                <p class="font-bold">8</p>
+                <p id="total" class="font-bold">0</p>
             </div>
             <div class="bg-amber-50 rounded-md p-4">
                 <p>Interview</p>
-                <P class="font-bold text-green-500">0</P>
+                <P id="interviewCount" class="font-bold text-green-500">0</P>
             </div>
             <div class="bg-amber-50 rounded-md p-4" >
                 <p>Rejected</p>
-                <P class="font-bold text-red-500">0</P>
+                <P id="rejectedCount" class="font-bold text-red-500">0</P>
             </div>
 
         </div>
@@ -44,23 +44,29 @@
     <main class="w-11/12 mx-auto">
         <p class="font-semibold">Available Jobs</p>
         <div class="pt-4 mb-6 ">
-            <button class="bg-blue-700 text-amber-50 px-5 py-2"  id="all-filter=btn">All</button>
-            <button class="bg-gray-200 px-5 py-2"  id="interview-filter-btn">Interview</button>
-            <button class="bg-gray-200 px-5 py-2"  id="rejected-filter=btn">Rejected</button>
+            <button onclick="toggleStyle('all-filter-btn')" class="bg-blue-700 text-amber-50 px-5 py-2"  id="all-filter-btn">All</button>
+            <button onclick="toggleStyle('interview-filter-btn')" class="bg-gray-200 px-5 py-2"  id="interview-filter-btn">Interview</button>
+            <button onclick="toggleStyle('rejected-filter-btn')" class="bg-gray-200 px-5 py-2"  id="rejected-filter-btn">Rejected</button>
         </div>
+        <!-- filtered card -->
+         <section id="filtered-section" class="hidden">
+
+         </section>
+
+
         <!-- card section -->
-        <section id="allCard  ">
+        <section id="allCard" class="space-y-6">
             <!-- card--1 -->
              <div class="card  flex justify-between border">
                 <!-- main part 1 -->
                 <div class="space-y-6">
                     <!-- part 1 -->
                     <div>
-                        <p class="font-semibold">Mobile First Corp</p>
-                        <p class="text-gray-400">React Native Developer</p>
+                        <p class="firstName font-semibold">Mobile First Corp</p>
+                        <p class="secondName text-gray-400">React Native Developer</p>
                     </div>
                     <div>
-                        <p class="text-gray-400">Remote • Full-time • $130,000 - $175,000</p>
+                        <p class="thirdName  text-gray-400">Remote • Full-time • $130,000 - $175,000</p>
 
                     </div>
                     <!-- part 3 -->
