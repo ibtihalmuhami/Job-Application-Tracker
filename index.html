@@ -15,14 +15,15 @@
         * {
             font-family: 'Geist' , sans-serif;
         }
+
     </style>
     
 </head>
 <body>
     <!-- job apllication tracker section -->
     <header class="w-11/12 mx-auto ">
-        <h1 class="text-4xl font-bold">Job Application Tracker</h1>
-        <div class=" grid grid-cols-3 gap-8">
+        <h1 class="text-4xl font-bold ">Job Application Tracker</h1>
+        <div class=" grid grid-cols-3 md:grid-cols-3 sm:grid-cols-3 gap-8">
             <div class="bg-amber-50 rounded-md p-4">
                 <p>
                     Total
@@ -43,7 +44,7 @@
     <hr class="my-5">
     <main class="w-11/12 mx-auto">
         <p class="font-semibold">Available Jobs</p>
-        <div class="pt-4 mb-6 ">
+        <div class="pt-4 mb-6  ">
             <button onclick="toggleStyle('all-filter-btn')" class="bg-blue-700 text-amber-50 px-5 py-2"  id="all-filter-btn">All</button>
             <button onclick="toggleStyle('interview-filter-btn')" class="bg-gray-200 px-5 py-2"  id="interview-filter-btn">Interview</button>
             <button onclick="toggleStyle('rejected-filter-btn')" class="bg-gray-200 px-5 py-2"  id="rejected-filter-btn">Rejected</button>
@@ -53,9 +54,17 @@
 
          </section>
 
-
+ 
         <!-- card section -->
-        <section id="allCard" class=" space-y-6">
+        <section id="allCard" class=" space-y-6 ">
+        <div id="empty-state" style="display: none;" class=" flex flex-col items-center justify-center py-20">
+            <img src="assignment.png" alt="" class="w-40 mb-4 opacity-50">
+            <h2 class="text-2xl font-extrabold ">No jobs available</h2>
+            <p class="text-gray-800">Check back soon for new job opportunities</p>
+        </div>
+
+
+
             <!-- card--1 -->
              <div class="card  flex justify-between border">
                 <!-- main part 1 -->
@@ -293,6 +302,7 @@
         </section>
 
     </main>
+    <!-- js connected -->
     <script src="js/script.js"></script>
     
 </body>
