@@ -1,5 +1,6 @@
 let interviewList = [];
 let rejectedList = [];
+let currentStatus = 'all'
 
 
 let total = document.getElementById('total')
@@ -39,6 +40,7 @@ function toggleStyle(id){
     interviewFilterBtn.classList.add('bg-gray-200' , 'text-black')
     rejectedFilterBtn.classList.add('bg-gray-200' , 'text-black')
     const selected = document.getElementById(id)
+    currentStatus = id
 
     selected.classList.remove('bg-gray-200','text-black')
     selected.classList.add('bg-blue-700', 'text-amber-50')
@@ -49,28 +51,38 @@ function toggleStyle(id){
     }else if( id == 'all-filter-btn'){
         allCardSection.classList.remove('hidden');
         filteredSection.classList.add('hidden')
+    }else if( id == 'rejected-filter-btn'){
+        allCardSection.classList.add('hidden');
+        filteredSection.classList.remove('hidden')
+
+
     }
 
 }
 
 maincontainer.addEventListener('click',function(event){
-    console.log(event.target.classList.contains('interview-btn'))
+    // console.log(event.target.classList.contains('interview-btn'))
     if(event.target.classList.contains('interview-btn')){
 
+
         const parentNode = event.target.parentNode.parentNode;
-        const firstName  = parentNode.querySelector('.firstName ').innerText
-        const secondName = parentNode.querySelector('.secondName').innerText
-        const thirdName = parentNode.querySelector('.thirdName').innerText
-        const status = parentNode.querySelector('.status').innerText
-        const notes = parentNode.querySelector('.notes').innerText
-        const interviewBtn = parentNode.querySelector('.interview-btn').innerText
-        const rejectedBtn = parentNode.querySelector('.rejected-btn').innerText
-    
+        const firstName  = parentNode.querySelector('.firstName').innerText
+
+        
+        const secondName = parentNode.querySelectorAll('.secondName').innerText
+        const thirdName = parentNode.querySelectorAll('.thirdName').innerText
+        const status = parentNode.querySelectorAll('.status').innerText
+        const notes = parentNode.querySelectorAll('.notes').innerText
+        const interviewBtn = parentNode.querySelectorAll('.interview-btn').innerText
+        const rejectedBtn = parentNode.querySelectorAll('.rejected-btn').innerText
+
+        parentNode.querySelector('.status').innerText = "Interview"
+
         const cardInfo ={
             firstName ,
             secondName,
             thirdName,
-            status,
+            status: 'Interview',
             notes,
             interviewBtn,
             rejectedBtn
@@ -79,14 +91,62 @@ maincontainer.addEventListener('click',function(event){
         }
     
         const interviewExist = interviewList.find(item=> item.interviewBtn == cardInfo.interviewBtn)
-        parentNode.querySelector('.status').innerText = "interview"
+
+
         if(!interviewExist) {
             interviewList.push(cardInfo)
     
         }
+
+        rejectedList = rejectedList.filter(item=> item.firstName != cardInfo.firstName)
+        calculateCount()
+
         randerInterview()
 
+    }else if(event.target.classList.contains('rejected-btn')){
+
+        const parentNode = event.target.parentNode.parentNode;
+        const firstName  = parentNode.querySelectorAll('.firstName').innerText
+        
+        const secondName = parentNode.querySelectorAll('.secondName').innerText
+        const thirdName = parentNode.querySelectorAll('.thirdName').innerText
+        const status = parentNode.querySelectorAll('.status').innerText
+        const notes = parentNode.querySelectorAll('.notes').innerText
+        const interviewBtn = parentNode.querySelectorAll('.interview-btn').innerText
+        const rejectedBtn = parentNode.querySelectorAll('.rejected-btn').innerText
+
+        parentNode.querySelector('.status').innerText = "Rejected"
+
+        const cardInfo ={
+            firstName ,
+            secondName,
+            thirdName,
+            status: "Rejected",
+            notes,
+            interviewBtn,
+            rejectedBtn
+    
+    
+        }
+    
+        const interviewExist = rejectedList.find(item=> item.firstName == cardInfo.rejectedBtn)
+// -------------------------------------------------------------------------------------------------------
+
+        if(!interviewExist) {
+            rejectedList.push(cardInfo)
+    
+        }
+         interviewList = interviewList.filter(item=> item.firstName != cardInfo.firstName)
+
+         if(currentStatus=="rejected-filter-btn"){
+            randerRejected();
+         }
+
+        calculateCount()
+
+
     }
+
     
 
 })
@@ -95,14 +155,14 @@ function randerInterview(){
     filteredSection.innerHTML = ''
 
     for (let interview of interviewList){
-        console.log(interview)
+        // console.log(interview)
         let div = document.createElement('div');
         div.className = 'card  flex justify-between border'
         div.innerHTML = `
                         <div class="space-y-6">
                     <!-- part 1 -->
                     <div>
-                        <p class="firstName font-semibold">Mobile First Corp</p>
+                        <p class="firstName font-semibold"> ${interview.firstName}</p>
                         <p class="secondName text-gray-400">React Native Developer</p>
                     </div>
                     <div>
@@ -111,13 +171,53 @@ function randerInterview(){
                     </div>
                     <!-- part 3 -->
                     <div>
-                        <p class="status">Not Applied</p>
-                        <p class="notes">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
+                        <p class="status">  ${interview.status}</p>
+                        <p class="notes">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide</p>
                         
                     </div>
                     <div class="flex gap-5">
-                        <button class="interview-btn  border border-green-600 text-green-600 px-4 py-2">Interview</button>
-                        <button class="rejected-btn border border-red-600 text-red-600 px-4 py-2">Rejected</button>
+                        <button class="interview-btn  border border-green-600 text-green-600 px-4 py-2"> interview</button>
+                        <button class="rejected-btn border border-red-600 text-red-600 px-4 py-2">rejected</button>
+                    </div>
+                </div>
+                <!-- main part 2 -->
+                <div>
+                    <button class="btn-dlt border rounded-full px-2 py-2"><i class="fa-regular fa-trash-can"></i>
+                </div>
+
+
+      `
+      filteredSection.appendChild(div)
+    }
+
+}
+function randerRejected(){
+    filteredSection.innerHTML = ''
+
+    for (let rejected of rejectedList){
+        // console.log(interview)
+        let div = document.createElement('div');
+        div.className = 'card  flex justify-between border'
+        div.innerHTML = `
+                        <div class="space-y-6">
+                    <!-- part 1 -->
+                    <div>
+                        <p class="firstName font-semibold"> ${rejected.firstName}</p>
+                        <p class="secondName text-gray-400">  React Native Developer</p>
+                    </div>
+                    <div>
+                        <p class="thirdName  text-gray-400">Remote • Full-time • $130,000 - $175,000</p>
+
+                    </div>
+                    <!-- part 3 -->
+                    <div>
+                        <p class="status">  ${rejected.status}</p>
+                        <p class="notes">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide</p>
+                        
+                    </div>
+                    <div class="flex gap-5">
+                        <button class="interview-btn  border border-green-600 text-green-600 px-4 py-2"> interview</button>
+                        <button class="rejected-btn border border-red-600 text-red-600 px-4 py-2">rejected</button>
                     </div>
                 </div>
                 <!-- main part 2 -->
