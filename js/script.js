@@ -59,9 +59,20 @@ function toggleStyle(id){
     }
 
 }
+document.addEventListener("click", function(event){
+    if(event.target.classList.contains('btn-dlt')){
+        const btnDlt = event.target.closest(".card")
+        if(btnDlt){
+            btnDlt.remove();
+            calculateCount()
+
+        }
+    }
+})
 
 maincontainer.addEventListener('click',function(event){
     // console.log(event.target.classList.contains('interview-btn'))
+
     if(event.target.classList.contains('interview-btn')){
 
 
